@@ -18,5 +18,4 @@ router.post('/', async (req, res) => {
     res.redirect('/courses')
 })
 
-
 module.exports = router
