@@ -1,5 +1,11 @@
 class Card {
+    add() {
 
+    }
+
+    fetch() {
+
+    }
 }
 
 
