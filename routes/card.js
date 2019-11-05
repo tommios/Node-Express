@@ -20,7 +20,13 @@ router.get('/', async (req, res) => {
         courses: card.courses,
         price: card.price
     });
-})
+});
+
+router.delete('/remove/:id', async (req, res) => {
+    const card = await Card.remove(req.params.id);
+
+    res.status(200).json(card);
+});
 
 
 
