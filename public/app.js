@@ -1,8 +1,12 @@
-document.querySelectorAll('.price').forEach(node => {
-    node.textContent = new Intl.NumberFormat('ru-RU', {
+const toCarrency = price => {
+    return new Intl.NumberFormat('ru-RU', {
         currency: 'UAH',
         style: 'currency'
-    }).format(node.textContent);
+    }).format(price);
+}
+
+document.querySelectorAll('.price').forEach(node => {
+    node.textContent = toCarrency(node.textContent);
 })
 
 const $card = document.querySelector('#card');
@@ -28,7 +32,7 @@ if ($card) {
                             </tr>`;
                         }).join();
                         $card.querySelector('tbody').innerHTML = html;
-                        $card.querySelector('.price').textContent = card.price;
+                        $card.querySelector('.price').textContent = toCarrency(card.price);
                     } else {
                         $card.innerHTML = '<p>Корзина пуста</p>';
                     }
