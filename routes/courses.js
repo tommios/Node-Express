@@ -31,7 +31,7 @@ router.post('/edit', async (req, res) => {
     const { id } = req.body;
     delete req.body.id;
 
-    await Course.findByIdAndUpdate(req.body.id, req.body);
+    await Course.findOneAndUpdate(req.body.id, req.body);
     res.redirect('/courses');
 
 })
