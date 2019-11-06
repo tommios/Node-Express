@@ -1,6 +1,7 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const path = require('path');
+const mongoose = require('mongoose');
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
@@ -9,7 +10,6 @@ const cardRoutes = require('./routes/card');
 const app = express();
 
 //#region HandleBars Settings Конфигурация объекта HandleBars
-
 
 const hbs = exphbs.create({
     defaultLayout: 'main',
@@ -34,15 +34,22 @@ app.use('/courses', coursesRoutes);
 app.use('/add', addRoutes);
 app.use('/card', cardRoutes);
 
-
 //#endregion
-
 
 const PORT = process.env.PORT || 3000;
 
-const url = 'mongodb+srv://artem:yj0FhU4ULU6XoieO@cluster0-2jd7j.mongodb.net/test?retryWrites=true&w=majority';
+async function start() {
+    try{
+        const url = 'mongodb+srv://artem:yj0FhU4ULU6XoieO@cluster0-2jd7j.mongodb.net/test?retryWrites=true&w=majority';
+        await mongoose.connect(url, { useNewUrlParser: true });
+    
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`)
+        });
+    }
+    catch(err){
+        console.log(err);
+    }
+}
 
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-});
+start();
