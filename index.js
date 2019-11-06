@@ -40,6 +40,9 @@ app.use('/card', cardRoutes);
 
 const PORT = process.env.PORT || 3000;
 
+const url = 'mongodb+srv://artem:yj0FhU4ULU6XoieO@cluster0-2jd7j.mongodb.net/test?retryWrites=true&w=majority';
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 });
