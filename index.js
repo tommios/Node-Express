@@ -39,15 +39,15 @@ app.use('/card', cardRoutes);
 const PORT = process.env.PORT || 3000;
 
 async function start() {
-    try{
-        const url = 'mongodb+srv://artem:yj0FhU4ULU6XoieO@cluster0-2jd7j.mongodb.net/test?retryWrites=true&w=majority';
+    try {
+        const url = 'mongodb+srv://artem:yj0FhU4ULU6XoieO@cluster0-2jd7j.mongodb.net/shop';
         await mongoose.connect(url, { useNewUrlParser: true });
-    
+
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
         });
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
