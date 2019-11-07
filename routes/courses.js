@@ -10,8 +10,8 @@ router.get('/', async (req, res) => {
         title: 'Курсы',
         isCourses: true,
         courses
-    })
-})
+    });
+});
 
 router.get('/:id/edit', async (req, res) => {
     if (!req.query.allow) {
@@ -23,8 +23,8 @@ router.get('/:id/edit', async (req, res) => {
     res.render('course-edit', {
         title: `Редактировать ${course.title}`,
         course
-    })
-})
+    });
+});
 
 router.post('/edit', async (req, res) => {
 
@@ -34,7 +34,7 @@ router.post('/edit', async (req, res) => {
     await Course.findOneAndUpdate(req.body.id, req.body);
     res.redirect('/courses');
 
-})
+});
 
 router.get('/:id', async (req, res) => {
     const course = await Course.findById(req.params.id)
@@ -43,7 +43,15 @@ router.get('/:id', async (req, res) => {
         layout: 'empty',
         title: `Курс ${course.title}`,
         course
-    })
-})
+    });
+});
+
+router.post('/remove', async (req, res) => {
+    try {
+        await Course.deleteOne({ _id: req.body.id });
+        res.redirect('/courses');
+    }
+    catch (err) { console.log(err); }
+});
 
 module.exports = router
