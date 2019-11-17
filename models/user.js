@@ -34,7 +34,7 @@ userSchema.methods.addToCart = function (course) {
     //Клонируем массив items
     // const items = this.cart.items.concat();
     const items = [...this.cart.items];         // То же самое, синтаксис ES6
-    const index = clonedItems.findIndex(c => {
+    const index = items.findIndex(c => {
         return c.courseId.toString() === course._id.toString();
     })
 
