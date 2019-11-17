@@ -60,7 +60,7 @@ userSchema.methods.removeFromCart = function (id) {
     })
 
     if (items[index].count == 1) {
-        items = items.filter(c => c.courseId.toString !== id.toString())
+        items = items.filter(c => c.courseId.toString() !== id.toString())
     }
     else {
         items[index].count--;

@@ -45,12 +45,14 @@ router.delete('/remove/:id', async (req, res) => {
     const user = await req.user
         .populate('cart.items.courseId')
         .execPopulate();
+    //console.log(user);
 
     const courses = mapCartItems(user.cart);
     const cart = {
-        courses,
+        courses: courses,
         price: computePrice(courses)
     }
+    //console.log(cart);
 
     res.status(200).json(cart);
 });

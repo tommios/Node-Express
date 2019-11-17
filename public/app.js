@@ -29,9 +29,11 @@ if ($card) {
                                 <td>
                                     <button class="btn btn-small js-remove" data-id="${c.id}">Удалить</button>
                                 </td>
-                            </tr>`;
-                        }).join();
+                            </tr>`
+                        }).join('');
                         $card.querySelector('tbody').innerHTML = html;
+                        console.log(html);
+
                         $card.querySelector('.price').textContent = toCarrency(card.price);
                     } else {
                         $card.innerHTML = '<p>Корзина пуста</p>';
