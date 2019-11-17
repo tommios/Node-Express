@@ -51,7 +51,7 @@ userSchema.methods.addToCart = function (course) {
     // const newCart = { items: clonedItems };
     // this.cart = newCart;
 
-    this.cart = { items: items };
+    this.cart = { items };
 
 };
 
