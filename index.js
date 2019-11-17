@@ -26,7 +26,15 @@ app.set('views', 'views');
 
 // Custom middleware
 app.use(async (req, res, next) => {
-    const user = await User.findById('5dd1428601c71d3e845ba1bd');
+    try {
+        const user = await User.findById('5dd1428601c71d3e845ba1bd');
+        req.user = user;
+    }
+    catch (err) {
+        console.log(err);
+
+    }
+
 });
 
 // Регистрируем папку public как статическую
