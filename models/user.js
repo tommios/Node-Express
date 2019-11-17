@@ -33,23 +33,26 @@ const userSchema = new Schema({
 userSchema.methods.addToCart = function (course) {
     //Клонируем массив items
     // const items = this.cart.items.concat();
-    const clonedItems = [...this.cart.items];         // То же самое, синтаксис ES6
+    const items = [...this.cart.items];         // То же самое, синтаксис ES6
     const index = clonedItems.findIndex(c => {
         return c.courseId.toString() === course._id.toString();
     })
 
     if (index >= 0) {
-        clonedItems[index].count = clonedItems[index].count + 1; // Если такой курс уже есть в корзине
+        items[index].count = items[index].count + 1; // Если такой курс уже есть в корзине
     }
     else {
-        clonedItems.push({
+        items.push({
             count: 1,
             courseId: course._id
         });
     }
 
-    const newCart = { items: clonedItems };
-    this.cart = newCart;
+    // const newCart = { items: clonedItems };
+    // this.cart = newCart;
+
+    this.cart = { items: items };
+
 };
 
 module.exports = model('User', userSchema);
