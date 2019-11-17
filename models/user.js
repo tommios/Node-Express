@@ -47,13 +47,27 @@ userSchema.methods.addToCart = function (course) {
             courseId: course._id
         });
     }
-
-    // const newCart = { items: clonedItems };
-    // this.cart = newCart;
-
     this.cart = { items };
-
     return this.save();
 };
+
+// Определяем метод удаления из корзины
+userSchema.methods.removeFromCart = function (id) {
+    let items = [...this.cart.items];
+
+    const index = items.findIndex(c => {
+        return c.courseId.toString() === id.toString();
+    })
+
+    if (items[index].count == 1) {
+        items = items.filter(c => c.courseId.toString !== id.toString())
+    }
+    else {
+        items[index].count--;
+    }
+
+    this.cart = { items };
+    return this.save();
+}
 
 module.exports = model('User', userSchema);
