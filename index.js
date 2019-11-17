@@ -24,6 +24,11 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
+// Custom middleware
+app.use(async (req, res, next) => {
+    const user = await User.findById('5dd1428601c71d3e845ba1bd');
+});
+
 // Регистрируем папку public как статическую
 app.use(express.static(path.join(__dirname, 'public')));
 
