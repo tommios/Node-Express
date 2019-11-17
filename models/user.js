@@ -53,6 +53,7 @@ userSchema.methods.addToCart = function (course) {
 
     this.cart = { items };
 
+    return this.save();
 };
 
 module.exports = model('User', userSchema);
