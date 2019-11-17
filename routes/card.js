@@ -5,7 +5,7 @@ const router = Router();
 
 router.post('/add', async (req, res) => {
     const course = await Course.getById(req.body.id);
-    await Card.add(course);
+    await req.user.addToCart(course);
 
     res.redirect('/card');
 });

@@ -28,4 +28,10 @@ const userSchema = new Schema({
 
 });
 
+// Определяем метод добавления в корзину, 
+// который выносится прямо в объект пользователя
+userSchema.methods.addToCart = function (course) {
+
+};
+
 module.exports = model('User', userSchema);
