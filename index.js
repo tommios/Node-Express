@@ -6,6 +6,7 @@ const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
 const cardRoutes = require('./routes/card');
+const User = require('./models/user');
 
 const app = express();
 
@@ -46,6 +47,17 @@ async function start() {
             useUnifiedTopology: true,
             useFindAndModify: false
         });
+
+        const candidate = await User.findOne();
+
+        if (!candidate) {
+            const user = new User({
+                email: 'test@gmail.com',
+                name: 'test',
+                cart: { items: [] }
+            });
+            await user.save();
+        }
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
