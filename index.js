@@ -29,12 +29,11 @@ app.use(async (req, res, next) => {
     try {
         const user = await User.findById('5dd1428601c71d3e845ba1bd');
         req.user = user;
+        next();
     }
     catch (err) {
         console.log(err);
-
     }
-
 });
 
 // Регистрируем папку public как статическую
