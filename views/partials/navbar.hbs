@@ -23,7 +23,13 @@
             <li><a href="/add">Добавить курс</a></li>
             {{/if}}
 
-            {{#if isAdd}}
+            {{#if isOrders}}
+            <li class="active"><a href="/orders">Заказы</a></li>
+            {{else}}
+            <li><a href="/orders">Заказы</a></li>
+            {{/if}}
+
+            {{#if isCard}}
             <li class="active"><a href="/card">Корзина</a></li>
             {{else}}
             <li><a href="/card">Корзина</a></li>

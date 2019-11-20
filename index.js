@@ -6,6 +6,7 @@ const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
 const cardRoutes = require('./routes/card');
+const ordersRoutes = require('./routes/orders');
 const User = require('./models/user');
 
 const app = express();
@@ -46,6 +47,7 @@ app.use('/', homeRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/add', addRoutes);
 app.use('/card', cardRoutes);
+app.use('/orders', ordersRoutes);
 
 //#endregion
 
