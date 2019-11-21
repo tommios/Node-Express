@@ -1,5 +1,5 @@
 ## Node-Express
-Course project on web programming
+Application for the sale of programming courses
 
 ## Installation
 
