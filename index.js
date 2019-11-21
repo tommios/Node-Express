@@ -29,16 +29,16 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 // Custom middleware
-app.use(async (req, res, next) => {
-    try {
-        const user = await User.findById('5dd689ce085ead5d4077fa4f'); // '5dd1428601c71d3e845ba1bd'
-        req.user = user;
-        next();
-    }
-    catch (err) {
-        console.log(err);
-    }
-});
+// app.use(async (req, res, next) => {
+//     try {
+//         const user = await User.findById('5dd689ce085ead5d4077fa4f'); // '5dd1428601c71d3e845ba1bd'
+//         req.user = user;
+//         next();
+//     }
+//     catch (err) {
+//         console.log(err);
+//     }
+// });
 
 // Регистрируем папку public как статическую
 app.use(express.static(path.join(__dirname, 'public')));
@@ -75,16 +75,16 @@ async function start() {
             useFindAndModify: false
         });
 
-        const candidate = await User.findOne();
+        // const candidate = await User.findOne();
 
-        if (!candidate) {
-            const user = new User({
-                email: 'test@gmail.com',
-                name: 'TestUser',
-                cart: { items: [] }
-            });
-            await user.save();
-        }
+        // if (!candidate) {
+        //     const user = new User({
+        //         email: 'test@gmail.com',
+        //         name: 'TestUser',
+        //         cart: { items: [] }
+        //     });
+        //     await user.save();
+        // }
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
