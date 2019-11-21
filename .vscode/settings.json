@@ -1,3 +1,4 @@
+// How to Format Handlebars in VSCode
 {
     "editor.formatOnSave": true,
     "html.format.enable": true,
