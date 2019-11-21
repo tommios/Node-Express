@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     const orders = await Order.find({ 'user.userId': req.user._id })
-        .populate('userId');
+        .populate('user.userId');   // !!!
 
     try {
         res.render('orders', {
@@ -38,16 +38,15 @@ router.post('/', async (req, res) => {
         }));
 
         const order = new Order({
-            courses: courses,
             user: {
                 name: req.user.name,
                 userId: req.user
-            }
+            },
+            courses: courses
         })
 
         await order.save();
         await req.user.clearCart();
-
 
         res.redirect('/orders');
     }

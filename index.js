@@ -28,7 +28,7 @@ app.set('views', 'views');
 // Custom middleware
 app.use(async (req, res, next) => {
     try {
-        const user = await User.findById('5dd1428601c71d3e845ba1bd');
+        const user = await User.findById('5dd689ce085ead5d4077fa4f'); // '5dd1428601c71d3e845ba1bd'
         req.user = user;
         next();
     }
@@ -58,7 +58,6 @@ async function start() {
         const url = 'mongodb+srv://artem:yj0FhU4ULU6XoieO@cluster0-2jd7j.mongodb.net/shop';
         await mongoose.connect(url, {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
             useFindAndModify: false
         });
 
@@ -67,7 +66,7 @@ async function start() {
         if (!candidate) {
             const user = new User({
                 email: 'test@gmail.com',
-                name: 'test',
+                name: 'TestUser',
                 cart: { items: [] }
             });
             await user.save();
