@@ -10,6 +10,7 @@ const cardRoutes = require('./routes/card');
 const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
 const User = require('./models/user');
+const varMiddleware = require('./middleware/variables');
 
 const app = express();
 
@@ -51,6 +52,8 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(varMiddleware);
+
 // Указываем роуты на страницы
 app.use('/', homeRoutes);
 app.use('/courses', coursesRoutes);
@@ -68,6 +71,7 @@ async function start() {
         const url = 'mongodb+srv://artem:yj0FhU4ULU6XoieO@cluster0-2jd7j.mongodb.net/shop';
         await mongoose.connect(url, {
             useNewUrlParser: true,
+            useUnifiedTopology: true,
             useFindAndModify: false
         });
 
