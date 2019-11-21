@@ -46,11 +46,13 @@ if ($card) {
                                 </td>
                             </tr>`
                         }).join('');
+
                         $card.querySelector('tbody').innerHTML = html;
                         console.log(html);
 
                         $card.querySelector('.price').textContent = toCarrency(card.price);
-                    } else {
+                    }
+                    else {
                         $card.innerHTML = '<p>Корзина пуста</p>';
                     }
 
@@ -58,3 +60,5 @@ if ($card) {
         }
     });
 }
+
+M.Tabs.init(document.querySelectorAll('.tabs'));
