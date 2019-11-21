@@ -10,8 +10,34 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/', (req, res) => {
-    res.redirect('/orders');
+router.post('/', async (req, res) => {
+    try {
+        const user = await req.user
+            .populate('cart.items.courseId')
+            .execPopulate();
+
+        const courses = user.cart.items.map(i => ({
+            count: i.count,
+            course: { ...i.courseId._doc }
+        }));
+
+        const order = new Order({
+            courses: courses,
+            user: {
+                name: req.user.name,
+                userId: req.user
+            }
+        })
+
+        await order.save();
+        await req.user.clearCart();
+
+
+        res.redirect('/orders');
+    }
+    catch (err) {
+        console.log(err);
+    }
 });
 
 module.exports = router;
