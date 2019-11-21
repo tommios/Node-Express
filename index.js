@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const session = require('express-session');
 const path = require('path');
 const mongoose = require('mongoose');
 const homeRoutes = require('./routes/home');
@@ -42,6 +43,13 @@ app.use(async (req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: true }));
+
+// Настройка сессии
+app.use(session({
+    secret: 'some secret value',
+    resave: false,
+    saveUninitialized: false
+}));
 
 // Указываем роуты на страницы
 app.use('/', homeRoutes);
