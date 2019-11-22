@@ -12,6 +12,7 @@ const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
 const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
+const userMiddleware = require('./middleware/user');
 
 const app = express();
 
@@ -50,7 +51,9 @@ app.use(session({
     store: store
 }));
 
+// Добавляем middleware
 app.use(varMiddleware);
+app.use(userMiddleware);
 
 // Указываем роуты на страницы
 app.use('/', homeRoutes);
