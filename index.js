@@ -1,4 +1,5 @@
 const express = require('express');
+const csrf = require('csurf');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
@@ -52,6 +53,7 @@ app.use(session({
 }));
 
 // Добавляем middleware
+app.use(csrf());  // промежуточный обработчик csurf для защиты от подделки межсайтовых запросов
 app.use(varMiddleware);
 app.use(userMiddleware);
 
