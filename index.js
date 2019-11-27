@@ -12,13 +12,11 @@ const addRoutes = require('./routes/add');
 const cardRoutes = require('./routes/card');
 const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
-//const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
+const keys = require('./keys');
 
 const app = express();
-
-const MONGODB_URI = 'mongodb+srv://artem:yj0FhU4ULU6XoieO@cluster0-2jd7j.mongodb.net/shop';
 
 //#region HandleBars Settings Конфигурация объекта HandleBars
 
@@ -30,7 +28,7 @@ const hbs = exphbs.create({
 // Сохранение сессии в БД MongoDB
 const store = new MongoStore({
     collection: 'sessions',
-    uri: MONGODB_URI
+    uri: keys.MONGODB_URI
 });
 
 // Регистрируем модуль hbs как движок для рендеринга html-страниц
@@ -47,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Настройка сессии
 app.use(session({
-    secret: 'some secret value',
+    secret: keys.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store
@@ -73,7 +71,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
     try {
-        await mongoose.connect(MONGODB_URI, {
+        await mongoose.connect(keys.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
