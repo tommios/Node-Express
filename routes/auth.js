@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendgrid = require('nodemailer-sendgrid-transport');
 const keys = require('../keys');
+const regEmail = require('../emails/registration');
 const User = require('../models/user');
 
 const router = Router();
@@ -83,12 +84,7 @@ router.post('/register', async (req, res) => {
             });
             await user.save();
             res.redirect('/auth/login#login');
-            transporter.sendMail({
-                to: email,
-                from: 'node-express@mail.com',
-                subject: 'Аккаунт создан',
-                html: ''
-            });
+            await transporter.sendMail(regEmail(email));
         }
     }
     catch (err) {
