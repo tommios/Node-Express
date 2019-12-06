@@ -47,7 +47,7 @@ node_modules/
 jspm_packages/
 
 # Secret code
-keys/index.js
+keys/
 
 # TypeScript v1 declaration files
 typings/
