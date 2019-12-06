@@ -2,7 +2,8 @@
   "name": "node-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index",
+  "typings": "index",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -11,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.2.0",
@@ -20,6 +22,7 @@
     "express-session": "^1.17.0",
     "mongoose": "^5.7.8",
     "nodemailer": "^6.4.0",
+    "nodemailer-sendgrid": "^1.0.3",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "uuid": "^3.3.3"
   },

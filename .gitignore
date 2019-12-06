@@ -46,6 +46,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Secret code
+keys/index.js
+
 # TypeScript v1 declaration files
 typings/
 
