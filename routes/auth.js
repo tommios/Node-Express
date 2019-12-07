@@ -1,11 +1,13 @@
 const { Router } = require('express');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const nodemailerSendgrid = require('nodemailer-sendgrid');
 const sgMail = require('@sendgrid/mail');
 const sgTransport = require('nodemailer-sendgrid-transport');
 const keys = require('../keys');
 const regEmail = require('../emails/registration');
+const resetEmail = require('../emails/reset');
 const User = require('../models/user');
 
 const router = Router();
@@ -13,7 +15,7 @@ const router = Router();
 const transport = nodemailer.createTransport(
     sgTransport({
         auth: {
-            api_key: keys.SENDGRID_API_KEY02
+            api_key: keys.SENDGRID_API_KEY
         }
     }));
 
@@ -90,7 +92,7 @@ router.post('/register', async (req, res) => {
 
             await user.save();
 
-            transport.sendMail(
+            await transport.sendMail(
                 regEmail(email),
                 function (error, info) {
                     if (error) {
@@ -107,5 +109,41 @@ router.post('/register', async (req, res) => {
         console.log(err);
     }
 });
+
+router.get('/reset', (req, res) => {
+    res.render('auth/reset', {
+        title: 'Забыли пароль?',
+        error: req.flash('error')
+    });
+});
+
+router.post('/reset', (req, res) => {
+    try {
+        crypto.randomBytes(32, async (err, buffer)=>{
+            if(err){
+                req.flash('error', 'Что то пошло не так, повторите попытку позже');
+                return res.redirect('/auth/reset');
+            }
+
+            const token = buffer.toString('hex');
+            const candidate = await User.findOne({email: req.body.email});
+
+            if(candidate){
+                candidate.resetToken = token;
+                candidate.resetTokenExp = Date.now() + 60*60*1000; // Время жизни токена 1 час
+                await candidate.save();
+                await transport.sendMail(resetEmail(candidate.email, token));
+                res.redirect('/auth/login');
+            }
+            else{
+                req.flash('error', 'Пользователя с таким email не существует');
+                res.redirect('/auth/reset');
+            }
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
 
 module.exports = router;
