@@ -1,5 +1,5 @@
 ## Node-Express
-Application for the sale of programming courses
+Application for the sale
 
 ## Installation
 
