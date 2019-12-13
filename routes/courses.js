@@ -4,16 +4,21 @@ const auth = require('../middleware/auth');
 const router = Router();
 
 router.get('/', async (req, res) => {
+    try {
+        const courses = await Course.find()
+            .populate('userId', 'email name')
+            .select('price title img');
 
-    const courses = await Course.find()
-        .populate('userId', 'email name')
-        .select('price title img');
-
-    res.render('courses', {
-        title: 'Курсы',
-        isCourses: true,
-        courses
-    });
+        res.render('courses', {
+            title: 'Курсы',
+            isCourses: true,
+            userId: req.user ? req.user._id.toString() : null,
+            courses
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
 });
 
 router.get('/:id/edit', auth, async (req, res) => {
@@ -29,16 +34,6 @@ router.get('/:id/edit', auth, async (req, res) => {
     });
 });
 
-router.post('/edit', auth, async (req, res) => {
-
-    const { id } = req.body;
-    delete req.body.id;
-
-    await Course.findOneAndUpdate(req.body.id, req.body);
-    res.redirect('/courses');
-
-});
-
 router.get('/:id', async (req, res) => {
     const course = await Course.findById(req.params.id)
 
@@ -47,6 +42,16 @@ router.get('/:id', async (req, res) => {
         title: `Курс ${course.title}`,
         course
     });
+});
+
+router.post('/edit', auth, async (req, res) => {
+
+    const { id } = req.body;
+    delete req.body.id;
+
+    await Course.findOneAndUpdate(req.body.id, req.body);
+    res.redirect('/courses');
+
 });
 
 router.post('/remove', auth, async (req, res) => {
