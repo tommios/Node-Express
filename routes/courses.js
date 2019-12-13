@@ -3,6 +3,10 @@ const Course = require('../models/course');
 const auth = require('../middleware/auth');
 const router = Router();
 
+function isOwner(course, req) {
+    return course.userId.toString() === req.user._id.toString();
+}
+
 router.get('/', async (req, res) => {
     try {
         const courses = await Course.find()
@@ -26,12 +30,21 @@ router.get('/:id/edit', auth, async (req, res) => {
         return res.redirect('/');
     }
 
-    const course = await Course.findById(req.params.id);
+    try {
+        const course = await Course.findById(req.params.id);
 
-    res.render('course-edit', {
-        title: `Редактировать ${course.title}`,
-        course
-    });
+        if (!isOwner(course, req)) {
+            return res.redirect('/courses');
+        }
+
+        res.render('course-edit', {
+            title: `Редактировать ${course.title}`,
+            course
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
 });
 
 router.get('/:id', async (req, res) => {
@@ -45,13 +58,23 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/edit', auth, async (req, res) => {
+    try {
+        const { id } = req.body;
+        delete req.body.id;
+        const course = await Course.findById(id);
 
-    const { id } = req.body;
-    delete req.body.id;
+        if (!isOwner(course, req)) {
+            return res.redirect('/courses');
+        }
 
-    await Course.findOneAndUpdate(req.body.id, req.body);
-    res.redirect('/courses');
+        Object.assign(course, req.body);
+        await course.save();
 
+        res.redirect('/courses');
+    }
+    catch (err) {
+        console.log(err);
+    }
 });
 
 router.post('/remove', auth, async (req, res) => {
