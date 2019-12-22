@@ -52,3 +52,8 @@ nav{
     background: rgba(252, 68, 68, 0.89);
     color: rgb(28, 105, 41);
 }
+
+.avatar{
+    max-width: 300px;
+    height: auto;
+}
