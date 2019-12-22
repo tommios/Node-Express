@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const Course = require('../models/course');
 const auth = require('../middleware/auth');
+const { validationResult } = require('express-validator');
+const { courseValidators } = require('../utils/validators');
 const router = Router();
 
 function isOwner(course, req) {
@@ -60,9 +62,15 @@ router.get('/:id', async (req, res) => {
     catch (err) { console.log(err); }
 });
 
-router.post('/edit', auth, async (req, res) => {
+router.post('/edit', auth, courseValidators, async (req, res) => {
+    const { id } = req.body;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).redirect(`${id}/edit?allow=true`)
+    }
+
     try {
-        const { id } = req.body;
         delete req.body.id;
         const course = await Course.findById(id);
 

@@ -15,7 +15,7 @@ exports.registerValidators = [
                 console.log(err);
             }
         })
-        .normalizeEmail(),
+        .normalizeEmail({ gmail_remove_dots: false }),
     body('password', 'Пароль должен быть минимум 6 символов')
         .isLength({ min: 6, max: 56 })
         .isAlphanumeric()
@@ -31,4 +31,15 @@ exports.registerValidators = [
     body('name')
         .isLength({ min: 3 }).withMessage('Имя должно быть минимум три символа')
         .trim()
-]
+];
+
+exports.courseValidators = [
+    body('title')
+        .isLength({ min: 3 }).withMessage('Минимальная длина названия 3 символа')
+        .trim(),
+    body('price')
+        .isNumeric()
+        .withMessage('Введите корректную цену'),
+    body('img', 'Введите корректный URL картинки')
+        .isURL()
+];
