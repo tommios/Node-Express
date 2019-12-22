@@ -16,6 +16,7 @@ const profileRoutes = require('./routes/profile');
 const varMiddleware = require('./middleware/variables');
 const userMiddleware = require('./middleware/user');
 const errorHandler = require('./middleware/error');
+const fileMiddleware = require('./middleware/file');
 const keys = require('./keys');
 
 const app = express();
@@ -53,6 +54,9 @@ app.use(session({
     saveUninitialized: false,
     store: store
 }));
+
+// Добавляем middleware для загрузки фото аватарки профиля
+app.use(fileMiddleware.single('avatar'));
 
 // Добавляем middleware
 app.use(csrf());  // промежуточный обработчик csurf для защиты от подделки межсайтовых запросов
