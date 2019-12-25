@@ -1,4 +1,6 @@
 const express = require('express');
+const helmet = require('helmet');
+const compression = require('compression');
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
@@ -60,8 +62,12 @@ app.use(session({
 app.use(fileMiddleware.single('avatar'));
 
 // Добавляем middleware
-app.use(csrf());  // промежуточный обработчик csurf для защиты от подделки межсайтовых запросов
-app.use(flash()); // Flash-сообщения
+app.use(csrf());    // промежуточный обработчик csurf для защиты от подделки межсайтовых запросов
+app.use(flash());   // Flash-сообщения
+app.use(helmet());  // Добавление headers. Защита от некоторых веб-уязвимостей 
+//                        путем соответствующей настройки заголовков HTTP 
+//                      ( https://expressjs.com/ru/advanced/best-practice-security.html )
+app.use(compression());
 app.use(varMiddleware);
 app.use(userMiddleware);
 
