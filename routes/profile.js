@@ -20,7 +20,7 @@ router.post('/', auth, async (req, res) => {
             name: req.body.name
         }
 
-        console.log(req.file);
+        //console.log(req.file);
 
         if (req.file) {
             toChange.avatarUrl = req.file.path;
