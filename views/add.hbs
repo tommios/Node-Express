@@ -1,4 +1,4 @@
-<h1>Добавить курс</h1>
+<h1>Добавить товар</h1>
 
 {{#if error}}
     <p class="alert">{{error}}</p>
@@ -7,13 +7,13 @@
 <form action="/add" method="POST">
     <div class="input-field">
         <input id="title" name="title" type="text" class="validate" required value="{{data.title}}">
-        <label for="title">Название курса</label>
+        <label for="title">Название</label>
         <span class="helper-text" data-error="Введите название"></span>
     </div>
 
     <div class="input-field">
         <input id="price" name="price" type="number" class="validate" required min="1" value="{{data.price}}">
-        <label for="price">Цена курса</label>
+        <label for="price">Цена</label>
         <span class="helper-text" data-error="Введите цену"></span>
     </div>
 
@@ -25,5 +25,5 @@
 
     <input type="hidden" name="_csrf" value="{{csrf}}">
 
-    <button class="btn btn-primary">Добавить курс</button>
+    <button class="btn btn-primary waves-effect waves-orange">Добавить</button>
 </form>
